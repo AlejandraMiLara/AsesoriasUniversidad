@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from .models import CustomUser
 
 def inicio(request):
@@ -38,13 +38,13 @@ def registro(request):
 def ingreso(request):
     if request.method == 'GET':
         return render(request, 'ingreso.html', {
-            'form': AuthenticationForm
+            'form': CustomAuthenticationForm
         })
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
             return render(request, 'ingreso.html', {
-                'form': AuthenticationForm,
+                'form': CustomAuthenticationForm,
                 'msj': 'Usuario o password incorrecto'
             })
         else:
