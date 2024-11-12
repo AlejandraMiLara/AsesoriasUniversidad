@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
-from .forms import CustomUserCreationForm, CustomAuthenticationForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm, AgregarAsesoriaForm
 from .models import CustomUser
 
 def inicio(request):
@@ -57,3 +57,12 @@ def salir(request):
 
 def panel(request):
     return render(request, 'panel.html')
+
+def mis_materias(request):
+    return render(request, 'mis_materias.html')
+
+def mis_asesorias(request):
+    return render(request, 'mis_asesorias.html')
+
+def agregar_asesoria(request):
+    return render(request, 'agregar_asesoria.html')

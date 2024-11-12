@@ -6,5 +6,11 @@
 
 <p>
     Hola 
+    {% if user.role == 1%}
+        PROFESOR:
+    {% else %}
+        ALUMNO:
+    {% endif %}
+    @{{user.username}}
 </p>
 {% endblock %}

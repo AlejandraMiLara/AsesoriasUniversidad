@@ -1,14 +1,14 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import CustomUser
+from .models import CustomUser, Asesoria
 
 class CustomUserCreationForm(UserCreationForm):
     matricula = forms.IntegerField(required=True, label="Matrícula")
-    #role = forms.IntegerField(required=True, label="Rol")
+    role = forms.IntegerField(required=True, label="Rol")
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'password1', 'password2', 'matricula')
+        fields = ('username', 'password1', 'password2', 'matricula', 'role')
 
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
@@ -26,3 +26,8 @@ class CustomAuthenticationForm(AuthenticationForm):
         super(CustomAuthenticationForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items(): 
             field.widget.attrs['class'] = 'form-control'
+
+class AgregarAsesoriaForm(forms.ModelForm):
+    class Meta:
+        model = Asesoria
+        fields = '__all__'

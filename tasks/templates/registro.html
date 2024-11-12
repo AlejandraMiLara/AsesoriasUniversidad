@@ -2,6 +2,13 @@
 
 {% block content %}
 <h2>Registrar Nueva Cuenta</h2>
+
+<div class="alert alert-info" role="alert">
+    <strong>PROFESORES:</strong> ROL = 1
+    <br>
+    <strong>ESTUDIANTES:</strong> ROL = 0
+  </div>
+
 <form action="/registro/" method="POST">
     {% csrf_token %}
     {{msj}}
