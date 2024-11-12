@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.role == 0 %}
+    <h2>Ver Mis Asesorias Agendadas</h2>
+    <table>
+        <tr>
+            <th>Profesor</th>
+            <th>Estudiante</th>
+            <th>Materia</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Acciones</th>
+        </tr>
+        {% for asesoria in asesorias %}
+        <tr>
+            <td>{{ asesoria.profe.username }}</td>
+            <td>{{ asesoria.estudiante.username }}</td>
+            <td>{{ asesoria.materia.nombre }}</td>
+            <td>{{ asesoria.fecha }}</td>
+            <td>{{ asesoria.hora }}</td>
+            <td>
+                <a href="{% url 'editarasesoria' asesoria.pk %}">Editar</a>
+                <a href="{% url 'eliminarasesoria' asesoria.pk %}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+
+{% endif %}
+{% endblock %}

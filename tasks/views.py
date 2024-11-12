@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, AgregarAsesoriaForm
-from .models import CustomUser
+from .models import CustomUser, Asesoria
 
 def inicio(request):
     return render(request, 'inicio.html')
@@ -65,4 +65,33 @@ def mis_asesorias(request):
     return render(request, 'mis_asesorias.html')
 
 def agregar_asesoria(request):
-    return render(request, 'agregar_asesoria.html')
+    if request.method == 'POST':
+        form = AgregarAsesoriaForm(request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('verasesorias')
+    else:
+        form = AgregarAsesoriaForm(user=request.user)
+    return render(request, 'agregar_asesoria.html', {'form': form})
+
+def ver_asesorias(request):
+    asesorias = Asesoria.objects.all()
+    return render(request, 'ver_asesorias.html', {'asesorias': asesorias})
+
+def editar_asesoria(request, pk):
+    asesoria = get_object_or_404(Asesoria, pk=pk)
+    if request.method == 'POST':
+        form = AgregarAsesoriaForm(request.POST, instance=asesoria, user=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('verasesorias')
+    else:
+        form = AgregarAsesoriaForm(instance=asesoria, user=request.user)
+    return render(request, 'editar_asesoria.html', {'form': form})
+
+def eliminar_asesoria(request, pk):
+    asesoria = get_object_or_404(Asesoria, pk=pk)
+    if request.method == 'POST':
+        asesoria.delete()
+        return redirect('verasesorias')
+    return render(request, 'eliminar_asesoria.html', {'asesoria': asesoria})

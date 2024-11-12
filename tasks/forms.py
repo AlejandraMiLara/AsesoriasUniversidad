@@ -31,3 +31,11 @@ class AgregarAsesoriaForm(forms.ModelForm):
     class Meta:
         model = Asesoria
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(AgregarAsesoriaForm, self).__init__(*args, **kwargs)
+        self.fields['profe'].queryset = CustomUser.objects.filter(role=1)
+        if user:
+            self.fields['estudiante'].queryset = CustomUser.objects.filter(role=0, username=user.username)
+            self.fields['estudiante'].initial = user
