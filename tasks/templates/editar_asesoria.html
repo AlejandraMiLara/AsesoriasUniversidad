@@ -2,13 +2,13 @@
 
 {% block content %}
 
-{% if user.role == 0 %}
+
 <h2>Editar Asesoría</h2>
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Guardar</button>
 </form>
-{% endif %}
+
 
 {% endblock %}

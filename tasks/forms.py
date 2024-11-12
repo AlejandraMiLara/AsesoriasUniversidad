@@ -35,7 +35,12 @@ class AgregarAsesoriaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super(AgregarAsesoriaForm, self).__init__(*args, **kwargs)
-        self.fields['profe'].queryset = CustomUser.objects.filter(role=1)
-        if user:
+        if user.role == 0: 
+            #estudiante hace request
             self.fields['estudiante'].queryset = CustomUser.objects.filter(role=0, username=user.username)
-            self.fields['estudiante'].initial = user
+            self.fields['profe'].queryset = CustomUser.objects.filter(role=1)
+        else:
+            #profesor hace request
+            self.fields['profe'].queryset = CustomUser.objects.filter(role=1, username=user.username)
+            self.fields['estudiante'].queryset = CustomUser.objects.filter(role=0)
+        
