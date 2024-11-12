@@ -15,6 +15,9 @@ class CustomUser(AbstractUser):
 class Materia(models.Model):
     nombre = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.nombre
+
 class MateriasProfes(models.Model):
     materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
     profe = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
